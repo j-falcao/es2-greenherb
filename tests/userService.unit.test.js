@@ -24,7 +24,48 @@ describe('userService registration unit tests', () => {
     expect(storedUser.passwordHash).not.toBe('Password123');
     expect(user.passwordHash).toBeUndefined();
   });
-
+  
+  test('TU13 rejects a duplicate username', async () => {
+    await userService.createUser({
+      username: 'ana_green',
+      password: 'Password123'
+    });
+    
+    await expect(userService.createUser({
+      username: 'ana_green',
+      password: 'Password123'
+    })).rejects.toMatchObject({
+      statusCode: 409
+    });
+  });
+  
+  test.each([
+    ['TU14', null],
+    ['TU15', ''],
+    ['TU16', 'ana green!'],
+    ['TU17', 'ana-green'],
+    ['TU18', 'ana.green']
+  ])('%s rejects invalid username during registration', async (testId, username) => {
+    await expect(userService.createUser({
+      username,
+      password: 'Password123'
+    })).rejects.toMatchObject({
+      statusCode: 400
+    });
+  });
+  
+  test.each([
+    ['TU19', null],
+    ['TU20', '']
+  ])('%s rejects missing password during registration', async (testId, password) => {
+    await expect(userService.createUser({
+      username: 'ana_green',
+      password
+    })).rejects.toMatchObject({
+      statusCode: 400
+    });
+  });
+  
   test.each([
     ['TU21', 'Tecnico'],
     ['TU22', 'Responsavel'],
@@ -48,47 +89,6 @@ describe('userService registration unit tests', () => {
       username: 'ana_green',
       password: 'Password123',
       role: 'Gestor'
-    })).rejects.toMatchObject({
-      statusCode: 400
-    });
-  });
-
-  test('TU13 rejects a duplicate username', async () => {
-    await userService.createUser({
-      username: 'ana_green',
-      password: 'Password123'
-    });
-
-    await expect(userService.createUser({
-      username: 'ana_green',
-      password: 'Password123'
-    })).rejects.toMatchObject({
-      statusCode: 409
-    });
-  });
-
-  test.each([
-    ['TU14', null],
-    ['TU15', ''],
-    ['TU16', 'ana green!'],
-    ['TU17', 'ana-green'],
-    ['TU18', 'ana.green']
-  ])('%s rejects invalid username during registration', async (testId, username) => {
-    await expect(userService.createUser({
-      username,
-      password: 'Password123'
-    })).rejects.toMatchObject({
-      statusCode: 400
-    });
-  });
-
-  test.each([
-    ['TU19', null],
-    ['TU20', '']
-  ])('%s rejects missing password during registration', async (testId, password) => {
-    await expect(userService.createUser({
-      username: 'ana_green',
-      password
     })).rejects.toMatchObject({
       statusCode: 400
     });
