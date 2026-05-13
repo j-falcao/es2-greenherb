@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const userRepository = require('../repositories/userRepository');
 
 const USERNAME_PATTERN = /^[A-Za-z0-9_]+$/;
+const VALID_ROLES = ['Tecnico', 'Responsavel', 'Administrador'];
+const DEFAULT_ROLE = 'Tecnico';
 
 function createError(message, statusCode) {
   const error = new Error(message);
@@ -16,7 +18,8 @@ function toPublicUser(user) {
 
   return {
     id: user.id,
-    username: user.username
+    username: user.username,
+    role: user.role
   };
 }
 
@@ -30,8 +33,15 @@ function validateUsername(username) {
   }
 }
 
-async function createUser({ username, password }) {
+function validateRole(role) {
+  if (!VALID_ROLES.includes(role)) {
+    throw createError('Invalid role', 400);
+  }
+}
+
+async function createUser({ username, password, role = DEFAULT_ROLE }) {
   validateUsername(username);
+  validateRole(role);
 
   if (!password) {
     throw createError('Username and password are required', 400);
@@ -46,7 +56,8 @@ async function createUser({ username, password }) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = userRepository.create({
     username,
-    passwordHash
+    passwordHash,
+    role
   });
 
   return toPublicUser(user);
@@ -60,5 +71,6 @@ module.exports = {
   createUser,
   getPublicUserById,
   validateUsername,
+  validateRole,
   toPublicUser
 };

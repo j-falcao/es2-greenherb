@@ -1,6 +1,8 @@
 const authService = require('../src/services/authService');
 const userService = require('../src/services/userService');
 const userRepository = require('../src/repositories/userRepository');
+const jwt = require('jsonwebtoken');
+const { getAccessSecret, getRefreshSecret } = require('../src/services/tokenConfig');
 
 describe('authService unit tests', () => {
   beforeEach(() => {
@@ -10,7 +12,8 @@ describe('authService unit tests', () => {
   async function createUser() {
     return userService.createUser({
       username: 'ana_green',
-      password: 'Password123'
+      password: 'Password123',
+      role: 'Responsavel'
     });
   }
 
@@ -26,7 +29,19 @@ describe('authService unit tests', () => {
     expect(result.refreshToken).toEqual(expect.any(String));
     expect(result.user).toEqual({
       id: '1',
-      username: 'ana_green'
+      username: 'ana_green',
+      role: 'Responsavel'
+    });
+
+    expect(jwt.verify(result.accessToken, getAccessSecret())).toMatchObject({
+      sub: '1',
+      username: 'ana_green',
+      role: 'Responsavel'
+    });
+    expect(jwt.verify(result.refreshToken, getRefreshSecret())).toMatchObject({
+      sub: '1',
+      username: 'ana_green',
+      role: 'Responsavel'
     });
   });
 
@@ -78,6 +93,11 @@ describe('authService unit tests', () => {
     });
 
     expect(refreshResult.accessToken).toEqual(expect.any(String));
+    expect(jwt.verify(refreshResult.accessToken, getAccessSecret())).toMatchObject({
+      sub: '1',
+      username: 'ana_green',
+      role: 'Responsavel'
+    });
   });
 
   test('TU11 rejects invalid refresh token', () => {

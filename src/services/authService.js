@@ -17,7 +17,7 @@ function createError(message, statusCode) {
 
 function createAccessToken(user) {
   return jwt.sign(
-    { username: user.username },
+    { username: user.username, role: user.role },
     getAccessSecret(),
     {
       subject: user.id,
@@ -28,7 +28,7 @@ function createAccessToken(user) {
 
 function createRefreshToken(user) {
   return jwt.sign(
-    { username: user.username },
+    { username: user.username, role: user.role },
     getRefreshSecret(),
     {
       subject: user.id,

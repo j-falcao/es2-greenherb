@@ -16,11 +16,41 @@ describe('userService registration unit tests', () => {
 
     expect(user).toEqual({
       id: '1',
-      username: 'ana_green'
+      username: 'ana_green',
+      role: 'Tecnico'
     });
 
     expect(storedUser.passwordHash).toEqual(expect.any(String));
     expect(storedUser.passwordHash).not.toBe('Password123');
+    expect(user.passwordHash).toBeUndefined();
+  });
+
+  test.each([
+    ['TU21', 'Tecnico'],
+    ['TU22', 'Responsavel'],
+    ['TU23', 'Administrador']
+  ])('%s creates a user with role %s', async (testId, role) => {
+    const user = await userService.createUser({
+      username: `ana_${role}`,
+      password: 'Password123',
+      role
+    });
+
+    expect(user).toEqual({
+      id: '1',
+      username: `ana_${role}`,
+      role
+    });
+  });
+
+  test('TU24 rejects invalid role during registration', async () => {
+    await expect(userService.createUser({
+      username: 'ana_green',
+      password: 'Password123',
+      role: 'Gestor'
+    })).rejects.toMatchObject({
+      statusCode: 400
+    });
   });
 
   test('TU13 rejects a duplicate username', async () => {
