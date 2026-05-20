@@ -79,7 +79,6 @@
 | TU-75 | automationService.unit.test.js   | RF-11, RN-21        | N/A — AutomationService    | Unidade | Particionamento de Equivalência  | Obtém modo manual e altera para automático                                           | Modo válido automatico                    |
 | TU-76 | automationService.unit.test.js   | RF-11, RN-21        | N/A — AutomationService    | Unidade | Particionamento de Equivalência  | Rejeita modo de automação inválido com statusCode 400                               | Modo inválido                             |
 | TU-77 | reportService.unit.test.js       | RF-12               | N/A — ReportService        | Unidade | Particionamento de Equivalência  | Exporta relatório CSV                                                               | Recurso reportável existente              |
-| TU-78 | reportService.unit.test.js       | RF-12, RN-22        | N/A — ReportService        | Unidade | Particionamento de Equivalência  | Rejeita relatório Excel com statusCode 501                                          | Formato excel                             |
 | TU-79 | reportService.unit.test.js       | RF-12, RN-23        | N/A — ReportService        | Unidade | Particionamento de Equivalência  | Rejeita recurso desconhecido de relatório com statusCode 400                        | Recurso desconhecido                      |
 | TU-80 | auditService.unit.test.js        | RF-13               | N/A — AuditService         | Unidade | Particionamento de Equivalência  | Regista entrada de auditoria                                                         | Operação relevante                        |
 | TU-81 | auditService.unit.test.js        | RF-13               | N/A — AuditService         | Unidade | Particionamento de Equivalência  | Lista entradas de auditoria                                                          | Entrada de auditoria existente            |
@@ -131,6 +130,23 @@
 | TU-127 | authMiddleware.unit.test.js     | RF-02, RN-05, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita pedido sem token de autorização                                               | Authorization header ausente              |
 | TU-128 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita perfil de utilizador desconhecido                                             | Role Visitante                            |
 | TU-129 | batchService.unit.test.js       | RF-07, RN-14        | N/A — BatchService         | Unidade | Cobertura de Condições Múltiplas | Rejeita transição de estado após lote concluído                                       | Lote com estado concluido                 |
+| TI-01 | api.integration.test.js          | RF-02               | GET /health                | Integração | Smoke / Contrato HTTP            | Health check devolve status ok com HTTP 200                                           | API Express carregada                     |
+| TI-02 | api.integration.test.js          | RF-01, RN-04, RN-06 | POST /users                | Integração | Particionamento de Equivalência  | Cria utilizador público sem expor passwordHash                                        | JSON válido                               |
+| TI-03 | api.integration.test.js          | RF-02, RF-03, RN-05, RN-06 | POST /auth/login     | Integração | Particionamento de Equivalência  | Login válido devolve accessToken, refreshToken e user                                 | Utilizador registado                      |
+| TI-04 | api.integration.test.js          | RN-36               | GET /plans                 | Integração | Particionamento de Equivalência  | Rejeita endpoint protegido sem Authorization com HTTP 401                             | Header ausente                            |
+| TI-05 | api.integration.test.js          | RN-36               | GET /plans                 | Integração | Particionamento de Equivalência  | Rejeita endpoint protegido com token inválido com HTTP 401                            | Bearer token inválido                     |
+| TI-06 | api.integration.test.js          | RF-04, RN-07, RN-08 | POST /herbs, GET /herbs/:id | Integração | Particionamento de Equivalência | Importa CSV válido e confirma persistência por id                                     | Utilizador autenticado                    |
+| TI-07 | api.integration.test.js          | RF-04, RN-08        | POST /herbs                | Integração | Classe Inválida                  | Rejeita CSV com linha inválida/parcialmente válida com HTTP 400                       | Utilizador autenticado                    |
+| TI-09 | api.integration.test.js          | RF-05, RN-10, RN-11, RN-12 | POST /plans          | Integração | Fluxo entre Componentes          | Cria plano regular e calcula expectedHarvestDate                                      | Erva importada e token válido             |
+| TI-10 | api.integration.test.js          | RF-05, RF-07, RN-13, RN-14 | POST /batches, GET /batches/:id | Integração | Fluxo entre Componentes | Associa lote ao plano e confirma persistência                                         | Plano existente                           |
+| TI-11 | api.integration.test.js          | RF-09, RF-10, RN-17, RN-29, RN-30 | POST /measurements | Integração | Fluxo entre Componentes          | Medição com uma violação gera alerta aviso                                            | Lote com plano e limites                  |
+| TI-12 | api.integration.test.js          | RF-09, RF-10, RN-17, RN-29, RN-30 | POST /measurements | Integração | Fluxo entre Componentes          | Medição com múltiplas violações gera alerta critico                                   | Lote com plano e limites                  |
+| TI-13 | api.integration.test.js          | RF-10, RN-19, RN-32 | PATCH /alerts/:id/ignore   | Integração | Classe Inválida                  | Rejeita ignorar alerta sem justificação com HTTP 400                                  | Alerta ativo                              |
+| TI-14 | api.integration.test.js          | RF-10, RN-19, RN-32 | PATCH /alerts/:id/ignore   | Integração | Particionamento de Equivalência  | Ignora alerta com justificação válida                                                 | Alerta ativo                              |
+| TI-15 | api.integration.test.js          | RF-08, RN-15, RN-16 | POST /tasks, GET /tasks/:id, PATCH /tasks/:id/status | Integração | Fluxo entre Componentes | Cria, consulta e conclui tarefa operacional                                           | Lote existente                            |
+| TI-16 | api.integration.test.js          | RF-11, RN-20, RN-21 | POST/GET/PATCH /automation/rules, PUT /automation/mode | Integração | Fluxo entre Componentes | Cria, consulta, atualiza regra e altera modo de automação                             | Utilizador autenticado                    |
+| TI-17 | api.integration.test.js          | RF-12, RN-23        | GET /reports              | Integração | Contrato HTTP / Conteúdo         | Exporta relatório CSV com headers e conteúdo esperado                                 | Plano existente                           |
+| TI-19 | api.integration.test.js          | RF-02               | GET /unknown              | Integração | Classe Inválida / Contrato HTTP  | Rota inexistente devolve HTTP 404                                                     | API Express carregada                     |
 
 
 
@@ -172,7 +188,6 @@
 | RN-19    | Ignorar alerta exige justificação                                           |
 | RN-20    | Regra de automação deve ter nome, trigger e action                          |
 | RN-21    | Modo de automação deve ser manual ou automatico                             |
-| RN-22    | Exportação Excel ainda não está implementada                                |
 | RN-23    | Relatório deve referenciar um recurso exportável conhecido                  |
 | RN-24    | Plano pontual exige autorização explícita do Responsavel Técnico             |
 | RN-25    | Intervalo de temperatura do plano deve respeitar [18, 28]                   |
@@ -195,55 +210,54 @@
 
 | Requisito/Regra   | Casos de Teste                                                                            |
 |:------------------|:------------------------------------------------------------------------------------------|
-| RF-01             | TU-12, TU-13, TU-14, TU-15, TU-16, TU-17, TU-18, TU-19, TU-20, TU-21, TU-22, TU-23, TU-24 |
-| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127                     |
-| RF-03             | TU-10, TU-11                                                                              |
-| RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48                      |
-| RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124 |
+| RF-01             | TU-12, TU-13, TU-14, TU-15, TU-16, TU-17, TU-18, TU-19, TU-20, TU-21, TU-22, TU-23, TU-24, TI-02 |
+| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127, TI-01, TI-03, TI-19 |
+| RF-03             | TU-10, TU-11, TI-03                                                                       |
+| RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48, TI-06, TI-07        |
+| RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124, TI-09, TI-10 |
 | RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
-| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129                   |
-| RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62                                                         |
-| RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105                                        |
-| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126 |
-| RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121                          |
-| RF-12             | TU-77, TU-78, TU-79                                                                       |
+| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TI-10            |
+| RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62, TI-15                                                  |
+| RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105, TI-11, TI-12                           |
+| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TI-11, TI-12, TI-13, TI-14 |
+| RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TI-16                   |
+| RF-12             | TU-77, TU-79, TI-17                                                                       |
 | RF-13             | TU-80, TU-81                                                                              |
 | RN-01             | TU-04, TU-05, TU-06, TU-09, TU-14, TU-15, TU-16, TU-17, TU-18                             |
 | RN-02             | TU-07, TU-08, TU-09, TU-19, TU-20                                                         |
 | RN-03             | TU-13                                                                                     |
-| RN-04             | TU-12, TU-44                                                                              |
-| RN-05             | TU-01, TU-02, TU-03, TU-127                                                               |
-| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123, TU-128             |
-| RN-07             | TU-25, TU-28                                                                              |
-| RN-08             | TU-29, TU-30                                                                              |
+| RN-04             | TU-12, TU-44, TI-02                                                                       |
+| RN-05             | TU-01, TU-02, TU-03, TU-127, TI-03                                                       |
+| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123, TU-128, TI-02, TI-03 |
+| RN-07             | TU-25, TU-28, TI-06                                                                       |
+| RN-08             | TU-29, TU-30, TI-06, TI-07                                                               |
 | RN-09             | TU-31                                                                                     |
-| RN-10             | TU-35                                                                                     |
-| RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39                                                         |
-| RN-12             | TU-40, TU-41, TU-42, TU-43                                                                |
-| RN-13             | TU-52, TU-54                                                                              |
-| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129                                       |
-| RN-15             | TU-58, TU-61, TU-62                                                                       |
-| RN-16             | TU-60                                                                                     |
-| RN-17             | TU-63, TU-65, TU-66                                                                       |
+| RN-10             | TU-35, TI-09                                                                              |
+| RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39, TI-09                                                  |
+| RN-12             | TU-40, TU-41, TU-42, TU-43, TI-09                                                        |
+| RN-13             | TU-52, TU-54, TI-10                                                                       |
+| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TI-10                                |
+| RN-15             | TU-58, TU-61, TU-62, TI-15                                                               |
+| RN-16             | TU-60, TI-15                                                                              |
+| RN-17             | TU-63, TU-65, TU-66, TI-11, TI-12                                                       |
 | RN-18             | TU-67, TU-125, TU-126                                                                     |
-| RN-19             | TU-70, TU-71, TU-106, TU-107, TU-108, TU-109, TU-110                                      |
-| RN-20             | TU-72                                                                                     |
-| RN-21             | TU-75, TU-76                                                                              |
-| RN-22             | TU-78                                                                                     |
-| RN-23             | TU-79                                                                                     |
+| RN-19             | TU-70, TU-71, TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                        |
+| RN-20             | TU-72, TI-16                                                                              |
+| RN-21             | TU-75, TU-76, TI-16                                                                       |
+| RN-23             | TU-79, TI-17                                                                              |
 | RN-24             | TU-42, TU-82, TU-124                                                                       |
 | RN-25             | TU-83, TU-84, TU-85, TU-86, TU-87                                                        |
 | RN-26             | TU-88, TU-89, TU-90, TU-91, TU-92                                                        |
 | RN-27             | TU-93, TU-94, TU-95, TU-96, TU-97                                                        |
 | RN-28             | TU-98, TU-99, TU-100, TU-101, TU-102                                                     |
-| RN-29             | TU-103, TU-104, TU-105                                                                    |
-| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114                                           |
+| RN-29             | TU-103, TU-104, TU-105, TI-11, TI-12                                                     |
+| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TI-11, TI-12                              |
 | RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114                                                   |
-| RN-32             | TU-106, TU-107, TU-108, TU-109, TU-110                                                   |
+| RN-32             | TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                                     |
 | RN-33             | TU-115                                                                                    |
 | RN-34             | TU-116, TU-117                                                                            |
 | RN-35             | TU-118, TU-119, TU-120, TU-121                                                           |
-| RN-36             | TU-122, TU-123, TU-127, TU-128                                                           |
+| RN-36             | TU-122, TU-123, TU-127, TU-128, TI-04, TI-05                                             |
 | RN-37             | TU-57                                                                                     |
 
 

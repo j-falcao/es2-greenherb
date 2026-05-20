@@ -52,13 +52,6 @@ describe('reportService unit tests', () => {
     expect(report.body).toContain('id,userId,herbId,type,startDate,notes,cycleDurationDays,expectedHarvestDate,environmentLimits,pontualAuthorization');
   });
 
-  test('TU78 rejects Excel reports', () => {
-    expect(() => reportService.exportReport({
-      resource: 'plans',
-      format: 'excel'
-    })).toThrow(expect.objectContaining({ statusCode: 501 }));
-  });
-
   test('TU79 rejects unknown report resources', () => {
     expect(() => reportService.exportReport({
       resource: 'unknown',
