@@ -93,4 +93,36 @@ describe('userService registration unit tests', () => {
       statusCode: 400
     });
   });
+
+  test('TU44 lists public users without password hashes', async () => {
+    await userService.createUser({
+      username: 'ana_green',
+      password: 'Password123'
+    });
+
+    expect(userService.listUsers()).toEqual([{
+      id: '1',
+      username: 'ana_green',
+      role: 'Tecnico'
+    }]);
+  });
+
+  test('TU45 updates a user role', async () => {
+    const user = await userService.createUser({
+      username: 'ana_green',
+      password: 'Password123'
+    });
+
+    expect(userService.updateUserRole(user.id, 'Administrador')).toEqual({
+      id: '1',
+      username: 'ana_green',
+      role: 'Administrador'
+    });
+  });
+
+  test('TU46 rejects role update for missing user', () => {
+    expect(() => userService.updateUserRole('999', 'Administrador')).toThrow(
+      expect.objectContaining({ statusCode: 404 })
+    );
+  });
 });

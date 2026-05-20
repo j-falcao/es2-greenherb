@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const userRepository = require('../repositories/userRepository');
+const auditService = require('./auditService');
 
 const USERNAME_PATTERN = /^[A-Za-z0-9_]+$/;
 const VALID_ROLES = ['Tecnico', 'Responsavel', 'Administrador'];
@@ -60,6 +61,14 @@ async function createUser({ username, password, role = DEFAULT_ROLE }) {
     role
   });
 
+  auditService.recordAudit({
+    userId: user.id,
+    username: user.username,
+    action: 'create',
+    resource: 'users',
+    resourceId: user.id
+  });
+
   return toPublicUser(user);
 }
 
@@ -67,9 +76,37 @@ function getPublicUserById(id) {
   return toPublicUser(userRepository.findById(id));
 }
 
+function listUsers() {
+  return userRepository.findAll().map(toPublicUser);
+}
+
+function updateUserRole(id, role, actor) {
+  const user = userRepository.findById(id);
+
+  if (!user) {
+    throw createError('User not found', 404);
+  }
+
+  validateRole(role);
+
+  const updatedUser = userRepository.update(id, { role });
+
+  auditService.recordAudit({
+    userId: actor && actor.id,
+    username: actor && actor.username,
+    action: 'update_role',
+    resource: 'users',
+    resourceId: updatedUser.id
+  });
+
+  return toPublicUser(updatedUser);
+}
+
 module.exports = {
   createUser,
   getPublicUserById,
+  listUsers,
+  updateUserRole,
   validateUsername,
   validateRole,
   toPublicUser

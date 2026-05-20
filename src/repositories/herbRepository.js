@@ -1,39 +1,19 @@
-let herbs = [];
-let nextId = 1;
+const createMemoryRepository = require('./createMemoryRepository');
 
-function create(herbData) {
-  const herb = {
-    id: String(nextId),
-    ...herbData
-  };
-
-  nextId += 1;
-  herbs.push(herb);
-
-  return herb;
-}
-
-function findAll() {
-  return herbs;
-}
-
-function findById(id) {
-  return herbs.find((herb) => herb.id === String(id));
-}
+const repository = createMemoryRepository();
 
 function findByName(name) {
-  return herbs.find((herb) => herb.name.toLowerCase() === name.toLowerCase());
-}
+  if (!name) {
+    return undefined;
+  }
 
-function reset() {
-  herbs = [];
-  nextId = 1;
+  return repository.findAll().find((herb) => herb.name.toLowerCase() === name.toLowerCase());
 }
 
 module.exports = {
-  create,
-  findAll,
-  findById,
+  create: repository.create,
+  findAll: repository.findAll,
+  findById: repository.findById,
   findByName,
-  reset
+  reset: repository.reset
 };

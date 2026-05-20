@@ -1,4 +1,5 @@
 const herbRepository = require('../repositories/herbRepository');
+const auditService = require('./auditService');
 
 function createError(message, statusCode) {
   const error = new Error(message);
@@ -84,7 +85,7 @@ function validateHerb(herb) {
   }
 }
 
-function importCatalog(csvText) {
+function importCatalog(csvText, user) {
   const herbs = parseCatalogCsv(csvText).map(normalizeHerb);
 
   if (herbs.length === 0) {
@@ -99,7 +100,19 @@ function importCatalog(csvText) {
     }
   });
 
-  return herbs.map((herb) => herbRepository.create(herb));
+  return herbs.map((herb) => {
+    const createdHerb = herbRepository.create(herb);
+
+    auditService.recordAudit({
+      userId: user && user.id,
+      username: user && user.username,
+      action: 'create',
+      resource: 'herbs',
+      resourceId: createdHerb.id
+    });
+
+    return createdHerb;
+  });
 }
 
 function listHerbs() {

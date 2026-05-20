@@ -1,34 +1,16 @@
-let users = [];
-let nextId = 1;
+const createMemoryRepository = require('./createMemoryRepository');
 
-function create(userData) {
-  const user = {
-    id: String(nextId),
-    ...userData
-  };
-
-  nextId += 1;
-  users.push(user);
-
-  return user;
-}
+const repository = createMemoryRepository();
 
 function findByUsername(username) {
-  return users.find((user) => user.username === username);
-}
-
-function findById(id) {
-  return users.find((user) => user.id === String(id));
-}
-
-function reset() {
-  users = [];
-  nextId = 1;
+  return repository.findAll().find((user) => user.username === username);
 }
 
 module.exports = {
-  create,
+  create: repository.create,
   findByUsername,
-  findById,
-  reset
+  findById: repository.findById,
+  findAll: repository.findAll,
+  update: repository.update,
+  reset: repository.reset
 };

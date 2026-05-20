@@ -70,4 +70,16 @@ describe('herbService unit tests', () => {
       harvestDays: 80
     });
   });
+
+  test('TU47 gets an imported herb by id', () => {
+    const herb = herbService.importCatalog(
+      'name,wateringFrequencyDays,harvestDays\nMint,3,45'
+    )[0];
+
+    expect(herbService.getHerbById(herb.id)).toEqual(herb);
+  });
+
+  test('TU48 returns undefined for missing herb id', () => {
+    expect(herbService.getHerbById('999')).toBeUndefined();
+  });
 });
