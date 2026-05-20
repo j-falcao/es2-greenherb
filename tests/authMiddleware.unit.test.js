@@ -1,3 +1,4 @@
+const authenticate = require('../src/middleware/authMiddleware');
 const { authorizeRoles } = require('../src/middleware/authMiddleware');
 
 function createResponse() {
@@ -30,4 +31,25 @@ describe('authMiddleware authorization unit tests', () => {
     expect(res.status).toHaveBeenCalledWith(403);
   });
 
+  test('TU127 rejects requests without an authorization token', () => {
+    const req = { headers: {} };
+    const res = createResponse();
+    const next = jest.fn();
+
+    authenticate(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(401);
+  });
+
+  test('TU128 rejects unknown user profile', () => {
+    const req = { user: { role: 'Visitante' } };
+    const res = createResponse();
+    const next = jest.fn();
+
+    authorizeRoles('Tecnico', 'Responsavel', 'Administrador')(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(403);
+  });
 });

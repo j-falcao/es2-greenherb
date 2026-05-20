@@ -126,6 +126,11 @@
 | TU-122 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Permite utilizador com perfil autorizado                                             | Role Responsavel autorizado               |
 | TU-123 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita utilizador sem perfil autorizado                                             | Role Tecnico não autorizado               |
 | TU-124 | planService.unit.test.js        | RF-05, RN-24        | N/A — PlanService          | Unidade | Particionamento de Equivalência  | Cria plano pontual para Tecnico quando existe autorização explícita                  | Tipo pontual, user Tecnico e autorização explícita |
+| TU-125 | alertService.unit.test.js       | RF-10, RN-18        | N/A — AlertService         | Unidade | Particionamento de Equivalência  | Cria alerta do tipo Informativo                                                       | Tipo informativo e mensagem válida        |
+| TU-126 | alertService.unit.test.js       | RF-10, RN-18        | N/A — AlertService         | Unidade | Particionamento de Equivalência  | Rejeita classificação de alerta inválida                                             | Tipo inválido 'urgente'                   |
+| TU-127 | authMiddleware.unit.test.js     | RF-02, RN-05, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita pedido sem token de autorização                                               | Authorization header ausente              |
+| TU-128 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita perfil de utilizador desconhecido                                             | Role Visitante                            |
+| TU-129 | batchService.unit.test.js       | RF-07, RN-14        | N/A — BatchService         | Unidade | Cobertura de Condições Múltiplas | Rejeita transição de estado após lote concluído                                       | Lote com estado concluido                 |
 
 
 
@@ -191,15 +196,15 @@
 | Requisito/Regra   | Casos de Teste                                                                            |
 |:------------------|:------------------------------------------------------------------------------------------|
 | RF-01             | TU-12, TU-13, TU-14, TU-15, TU-16, TU-17, TU-18, TU-19, TU-20, TU-21, TU-22, TU-23, TU-24 |
-| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09                             |
+| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127                     |
 | RF-03             | TU-10, TU-11                                                                              |
 | RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48                      |
 | RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124 |
-| RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123                                                       |
-| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117                           |
+| RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
+| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129                   |
 | RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62                                                         |
 | RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105                                        |
-| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114 |
+| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126 |
 | RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121                          |
 | RF-12             | TU-77, TU-78, TU-79                                                                       |
 | RF-13             | TU-80, TU-81                                                                              |
@@ -207,8 +212,8 @@
 | RN-02             | TU-07, TU-08, TU-09, TU-19, TU-20                                                         |
 | RN-03             | TU-13                                                                                     |
 | RN-04             | TU-12, TU-44                                                                              |
-| RN-05             | TU-01, TU-02, TU-03                                                                       |
-| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123                     |
+| RN-05             | TU-01, TU-02, TU-03, TU-127                                                               |
+| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123, TU-128             |
 | RN-07             | TU-25, TU-28                                                                              |
 | RN-08             | TU-29, TU-30                                                                              |
 | RN-09             | TU-31                                                                                     |
@@ -216,11 +221,11 @@
 | RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39                                                         |
 | RN-12             | TU-40, TU-41, TU-42, TU-43                                                                |
 | RN-13             | TU-52, TU-54                                                                              |
-| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117                                               |
+| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129                                       |
 | RN-15             | TU-58, TU-61, TU-62                                                                       |
 | RN-16             | TU-60                                                                                     |
 | RN-17             | TU-63, TU-65, TU-66                                                                       |
-| RN-18             | TU-67                                                                                     |
+| RN-18             | TU-67, TU-125, TU-126                                                                     |
 | RN-19             | TU-70, TU-71, TU-106, TU-107, TU-108, TU-109, TU-110                                      |
 | RN-20             | TU-72                                                                                     |
 | RN-21             | TU-75, TU-76                                                                              |
@@ -238,5 +243,104 @@
 | RN-33             | TU-115                                                                                    |
 | RN-34             | TU-116, TU-117                                                                            |
 | RN-35             | TU-118, TU-119, TU-120, TU-121                                                           |
-| RN-36             | TU-122, TU-123                                                                            |
+| RN-36             | TU-122, TU-123, TU-127, TU-128                                                           |
 | RN-37             | TU-57                                                                                     |
+
+
+
+# Tabelas de decisão e MC/DC
+
+## Classificação de alertas ambientais
+
+Expressão exercitada: `sensorOK === false ? Informativo : violations.length === 0 ? Informativo : violations.length === 1 ? Aviso : Critico`.
+
+Condições atómicas:
+
+| Condição | Descrição |
+|:---------|:----------|
+| C1 | Sensor OK |
+| C2 | Existe pelo menos uma violação ambiental |
+| C3 | Existe mais do que uma violação ambiental |
+
+Tabela MC/DC reduzida:
+
+| C1 | C2 | C3 | Resultado esperado | Caso |
+|:---|:---|:---|:-------------------|:-----|
+| T | F | F | Informativo | TU-111 |
+| T | T | F | Aviso | TU-112 |
+| T | T | T | Critico | TU-113 |
+| F | F | F | Informativo | TU-114 |
+
+Justificação: TU-111/TU-112 demonstram o efeito de C2; TU-112/TU-113 demonstram o efeito de C3; TU-111/TU-114 demonstram que C1 altera o caminho lógico mesmo mantendo ausência de violações.
+
+## Validação de plano pontual
+
+Expressão exercitada: `type === 'pontual' && technicalResponsibleAuthorization !== true`.
+
+Condições atómicas:
+
+| Condição | Descrição |
+|:---------|:----------|
+| C1 | Tipo do plano é pontual |
+| C2 | Autorização explícita está presente |
+| C3 | Parâmetros do plano são válidos |
+
+Tabela MC/DC reduzida:
+
+| C1 | C2 | C3 | Resultado esperado | Caso |
+|:---|:---|:---|:-------------------|:-----|
+| F | F | T | Aceita plano regular/emergencia | TU-40, TU-41 |
+| T | T | T | Aceita plano pontual | TU-42, TU-124 |
+| T | F | T | Rejeita plano pontual | TU-82 |
+| T | T | F | Rejeita parâmetros inválidos | TU-83, TU-87, TU-98, TU-102 |
+
+Justificação: C1 altera a necessidade de autorização; C2 altera diretamente o resultado para planos pontuais; C3 é exercitada pelos limites ambientais e de duração.
+
+## Transição de estado de lote
+
+Expressões exercitadas: `batch.status === 'concluido'`, `nextStatus === 'comprometido' && losses.length === 0`, `nextStatus === 'concluido' && !actualEndDate`.
+
+Condições atómicas:
+
+| Condição | Descrição |
+|:---------|:----------|
+| C1 | Estado atual é concluido |
+| C2 | Próximo estado é comprometido |
+| C3 | Existem perdas registadas |
+| C4 | Próximo estado é concluido |
+| C5 | Existe data real de conclusão |
+
+Tabela MC/DC reduzida:
+
+| C1 | C2 | C3 | C4 | C5 | Resultado esperado | Caso |
+|:---|:---|:---|:---|:---|:-------------------|:-----|
+| F | F | F | T | T | Aceita conclusão | TU-55 |
+| F | F | F | T | F | Rejeita conclusão sem data | TU-115 |
+| F | T | F | F | F | Rejeita comprometido sem perdas | TU-116 |
+| F | T | T | F | F | Aceita comprometido com perdas | TU-117 |
+| T | T | T | F | F | Rejeita transição após concluído | TU-129 |
+
+Justificação: TU-55/TU-115 isolam o efeito de C5; TU-116/TU-117 isolam C3; TU-117/TU-129 exercitam o bloqueio por C1.
+
+## Decisão do motor de automação
+
+Expressão exercitada: `ruleActive && recentMeasurement ? (automaticMode ? execute : suggest) : skip`.
+
+Condições atómicas:
+
+| Condição | Descrição |
+|:---------|:----------|
+| C1 | Modo automático |
+| C2 | Regra ativa |
+| C3 | Medição recente |
+
+Tabela MC/DC reduzida:
+
+| C1 | C2 | C3 | Resultado esperado | Caso |
+|:---|:---|:---|:-------------------|:-----|
+| T | T | T | Executar | TU-118 |
+| F | T | T | Sugerir | TU-119 |
+| T | F | T | Ignorar | TU-120 |
+| T | T | F | Ignorar | TU-121 |
+
+Justificação: TU-118/TU-119 isolam C1; TU-118/TU-120 isolam C2; TU-118/TU-121 isolam C3.

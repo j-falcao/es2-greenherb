@@ -197,4 +197,27 @@ describe('batchService unit tests', () => {
       user
     }).status).toBe('comprometido');
   });
+
+  test('TU129 rejects status transition after batch is concluded', () => {
+    const plan = createPlan();
+    const batch = batchService.createBatch({
+      planId: plan.id,
+      code: 'BATCH-001',
+      startDate: '2026-05-14',
+      user
+    });
+
+    batchService.updateBatchStatus({
+      id: batch.id,
+      status: 'concluido',
+      actualEndDate: '2026-07-13',
+      user
+    });
+
+    expect(() => batchService.updateBatchStatus({
+      id: batch.id,
+      status: 'comprometido',
+      user
+    })).toThrow(expect.objectContaining({ statusCode: 400 }));
+  });
 });

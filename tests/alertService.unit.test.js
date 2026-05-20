@@ -27,6 +27,28 @@ describe('alertService unit tests', () => {
     });
   });
 
+  test('TU125 creates an informativo alert', () => {
+    const alert = alertService.createAlert({
+      type: 'informativo',
+      message: 'Sensor offline',
+      user
+    });
+
+    expect(alert).toMatchObject({
+      type: 'informativo',
+      message: 'Sensor offline',
+      status: 'ativo'
+    });
+  });
+
+  test('TU126 rejects invalid alert classification', () => {
+    expect(() => alertService.createAlert({
+      type: 'urgente',
+      message: 'Unknown classification',
+      user
+    })).toThrow(expect.objectContaining({ statusCode: 400 }));
+  });
+
   test('TU68 lists and gets alerts by id', () => {
     const alert = alertService.createAlert({
       type: 'aviso',
