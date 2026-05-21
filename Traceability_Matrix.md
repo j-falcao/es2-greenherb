@@ -289,7 +289,7 @@ Justificação: TU-111/TU-112 demonstram o efeito de C2; TU-112/TU-113 demonstra
 
 ## Validação de plano pontual
 
-Expressão exercitada: `type === 'pontual' && technicalResponsibleAuthorization !== true`.
+Expressão exercitada: `parametersValid && (type !== 'pontual' || technicalResponsibleAuthorization === true)`.
 
 Condições atómicas:
 
