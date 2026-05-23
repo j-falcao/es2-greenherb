@@ -38,4 +38,3 @@ describe('auditService unit tests', () => {
     expect(auditService.listAuditLogs()).toHaveLength(1);
   });
 });
-// TODO: add tests that show that the relevant operations cause an audit to be created with user action and timestasmp

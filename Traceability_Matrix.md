@@ -82,6 +82,7 @@
 | TU-79 | reportService.unit.test.js       | RF-12, RN-23        | N/A — ReportService        | Unidade | Particionamento de Equivalência  | Rejeita recurso desconhecido de relatório com statusCode 400                        | Recurso desconhecido                      |
 | TU-80 | auditService.unit.test.js        | RF-13               | N/A — AuditService         | Unidade | Particionamento de Equivalência  | Regista entrada de auditoria                                                         | Operação relevante                        |
 | TU-81 | auditService.unit.test.js        | RF-13               | N/A — AuditService         | Unidade | Particionamento de Equivalência  | Lista entradas de auditoria                                                          | Entrada de auditoria existente            |
+| TU-130 | auditOperations.unit.test.js    | RF-13               | N/A — Operações auditadas  | Unidade | Fluxo entre Componentes          | Garante auditoria das operações relevantes com utilizador, ação e momento             | Operações relevantes com utilizador       |
 | TU-82 | planService.unit.test.js         | RF-05, RN-24        | N/A — PlanService          | Unidade | Particionamento de Equivalência  | Rejeita plano pontual sem autorização explícita                                      | Tipo pontual sem autorização explícita     |
 | TU-83 | planService.unit.test.js         | RF-05, RN-25        | N/A — PlanService          | Unidade | Análise de Valores Limite        | Rejeita temperatura mínima abaixo do limite                                          | temperature.min = 17                      |
 | TU-84 | planService.unit.test.js         | RF-05, RN-25        | N/A — PlanService          | Unidade | Análise de Valores Limite        | Aceita temperatura mínima no limite inferior                                         | temperature.min = 18                      |
@@ -267,7 +268,7 @@
 | RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
 | RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45, TI-16 |
 | RF-12             | TU-77, TU-79, TI-17                                                                       |
-| RF-13             | TU-80, TU-81                                                                              |
+| RF-13             | TU-80, TU-81, TU-130                                                                      |
 | RN-01             | TU-04, TU-05, TU-06, TU-09, TU-14, TU-15, TU-16, TU-17, TU-18                             |
 | RN-02             | TU-07, TU-08, TU-09, TU-19, TU-20                                                         |
 | RN-03             | TU-13                                                                                     |
