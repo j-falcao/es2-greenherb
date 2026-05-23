@@ -130,6 +130,25 @@
 | TU-127 | authMiddleware.unit.test.js     | RF-02, RN-05, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita pedido sem token de autorização                                               | Authorization header ausente              |
 | TU-128 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita perfil de utilizador desconhecido                                             | Role Visitante                            |
 | TU-129 | batchService.unit.test.js       | RF-07, RN-14        | N/A — BatchService         | Unidade | Cobertura de Condições Múltiplas | Rejeita transição de estado após lote concluído                                       | Lote com estado concluido                 |
+| TW-01 | planService.whitebox.test.js    | RF-05, RN-10, RN-11, RN-12, RN-24, RN-25, RN-26, RN-27, RN-28 | N/A - PlanService | Unidade | White-box / Statement / Branch / MC/DC | Cria plano regular valido com defaults e cobre ramos FALSE/base das decisoes de criacao | Erva existente e data valida              |
+| TW-02 | planService.whitebox.test.js    | RF-05, RN-10        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita criacao para erva inexistente                                                  | HerbId inexistente                        |
+| TW-03 | planService.whitebox.test.js    | RF-05, RN-11        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita startDate nao string                                                           | startDate null                            |
+| TW-04 | planService.whitebox.test.js    | RF-05, RN-11        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita startDate com formato invalido                                                 | startDate '13-05-2026'                   |
+| TW-05 | planService.whitebox.test.js    | RF-05, RN-11        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita data com rollover calendario                                                   | startDate '2026-02-30'                   |
+| TW-06 | planService.whitebox.test.js    | RF-05, RN-11        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita Date invalido                                                                  | startDate '2026-13-01'                   |
+| TW-07 | planService.whitebox.test.js    | RF-05, RN-12        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita tipo de plano invalido                                                         | Tipo 'weekly'                             |
+| TW-08 | planService.whitebox.test.js    | RF-05, RN-11, RN-28 | N/A - PlanService          | Unidade | White-box / Branch / MC/DC       | Cria plano com duracao explicita, notas e utilizador de auditoria                      | Ciclo 90, notas e user com username       |
+| TW-09 | planService.whitebox.test.js    | RF-05, RN-24        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Cria plano pontual com autorizacao explicita e authorizedBy                            | Tipo pontual autorizado                   |
+| TW-10 | planService.whitebox.test.js    | RF-05, RN-24        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita plano pontual sem autorizacao explicita                                        | Tipo pontual sem autorizacao              |
+| TW-11 | planService.whitebox.test.js    | RF-05, RN-24        | N/A - PlanService          | Unidade | White-box / Branch / MC/DC       | Cria plano pontual autorizado com user.id e username falsy                             | Tipo pontual, user.id e username vazios   |
+| TW-12 | planService.whitebox.test.js    | RF-05, RN-25        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita limite ambiental abaixo do minimo                                              | temperature.min 17                        |
+| TW-13 | planService.whitebox.test.js    | RF-05, RN-25        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita limite ambiental acima do maximo                                               | temperature.max 29                        |
+| TW-14 | planService.whitebox.test.js    | RF-05, RN-25        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Aceita limite ambiental exatamente nos extremos validos                                | temperature 18 a 28                       |
+| TW-15 | planService.whitebox.test.js    | RF-05, RN-25        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita intervalo ambiental invertido                                                  | temperature.min maior que max             |
+| TW-16 | planService.whitebox.test.js    | RF-05, RN-25        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita valor ambiental nao numerico                                                   | temperature.min 'hot'                     |
+| TW-17 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita duracao de ciclo nao inteira                                                   | cycleDurationDays 10.5                    |
+| TW-18 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita duracao de ciclo abaixo do minimo                                              | cycleDurationDays 0                       |
+| TW-19 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita duracao de ciclo acima do maximo                                               | cycleDurationDays 366                     |
 | TI-01 | api.integration.test.js          | RF-02               | GET /health                | Integração | Smoke / Contrato HTTP            | Health check devolve status ok com HTTP 200                                           | API Express carregada                     |
 | TI-02 | api.integration.test.js          | RF-01, RN-04, RN-06 | POST /users                | Integração | Particionamento de Equivalência  | Cria utilizador público sem expor passwordHash                                        | JSON válido                               |
 | TI-03 | api.integration.test.js          | RF-02, RF-03, RN-05, RN-06 | POST /auth/login     | Integração | Particionamento de Equivalência  | Login válido devolve accessToken, refreshToken e user                                 | Utilizador registado                      |
@@ -214,7 +233,7 @@
 | RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127, TI-01, TI-03, TI-19 |
 | RF-03             | TU-10, TU-11, TI-03                                                                       |
 | RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48, TI-06, TI-07        |
-| RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124, TI-09, TI-10 |
+| RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124, TW-01, TW-02, TW-03, TW-04, TW-05, TW-06, TW-07, TW-08, TW-09, TW-10, TW-11, TW-12, TW-13, TW-14, TW-15, TW-16, TW-17, TW-18, TW-19, TI-09, TI-10 |
 | RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
 | RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TI-10            |
 | RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62, TI-15                                                  |
@@ -232,9 +251,9 @@
 | RN-07             | TU-25, TU-28, TI-06                                                                       |
 | RN-08             | TU-29, TU-30, TI-06, TI-07                                                               |
 | RN-09             | TU-31                                                                                     |
-| RN-10             | TU-35, TI-09                                                                              |
-| RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39, TI-09                                                  |
-| RN-12             | TU-40, TU-41, TU-42, TU-43, TI-09                                                        |
+| RN-10             | TU-35, TW-01, TW-02, TI-09                                                               |
+| RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39, TW-01, TW-03, TW-04, TW-05, TW-06, TW-08, TI-09       |
+| RN-12             | TU-40, TU-41, TU-42, TU-43, TW-01, TW-07, TW-09, TI-09                                   |
 | RN-13             | TU-52, TU-54, TI-10                                                                       |
 | RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TI-10                                |
 | RN-15             | TU-58, TU-61, TU-62, TI-15                                                               |
@@ -245,11 +264,11 @@
 | RN-20             | TU-72, TI-16                                                                              |
 | RN-21             | TU-75, TU-76, TI-16                                                                       |
 | RN-23             | TU-79, TI-17                                                                              |
-| RN-24             | TU-42, TU-82, TU-124                                                                       |
-| RN-25             | TU-83, TU-84, TU-85, TU-86, TU-87                                                        |
-| RN-26             | TU-88, TU-89, TU-90, TU-91, TU-92                                                        |
-| RN-27             | TU-93, TU-94, TU-95, TU-96, TU-97                                                        |
-| RN-28             | TU-98, TU-99, TU-100, TU-101, TU-102                                                     |
+| RN-24             | TU-42, TU-82, TU-124, TW-09, TW-10, TW-11                                                |
+| RN-25             | TU-83, TU-84, TU-85, TU-86, TU-87, TW-01, TW-12, TW-13, TW-14, TW-15, TW-16              |
+| RN-26             | TU-88, TU-89, TU-90, TU-91, TU-92, TW-01                                                 |
+| RN-27             | TU-93, TU-94, TU-95, TU-96, TU-97, TW-01                                                 |
+| RN-28             | TU-98, TU-99, TU-100, TU-101, TU-102, TW-01, TW-08, TW-17, TW-18, TW-19                  |
 | RN-29             | TU-103, TU-104, TU-105, TI-11, TI-12                                                     |
 | RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TI-11, TI-12                              |
 | RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114                                                   |
