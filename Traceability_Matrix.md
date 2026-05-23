@@ -149,6 +149,32 @@
 | TW-17 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita duracao de ciclo nao inteira                                                   | cycleDurationDays 10.5                    |
 | TW-18 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita duracao de ciclo abaixo do minimo                                              | cycleDurationDays 0                       |
 | TW-19 | planService.whitebox.test.js    | RF-05, RN-28        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita duracao de ciclo acima do maximo                                               | cycleDurationDays 366                     |
+| TW-20 | alertService.whitebox.test.js   | RF-10, RN-31        | N/A - AlertService         | Unidade | White-box / Branch / MC/DC       | Classifica sensor nao confiavel como informativo                                       | sensorOK false                            |
+| TW-21 | alertService.whitebox.test.js   | RF-10, RN-30        | N/A - AlertService         | Unidade | White-box / Branch / MC/DC       | Classifica ausencia de violacoes como informativo                                      | Sem violacoes ambientais                  |
+| TW-22 | alertService.whitebox.test.js   | RF-10, RN-29, RN-30 | N/A - AlertService         | Unidade | White-box / Branch / MC/DC       | Classifica uma violacao como aviso                                                     | Uma violacao ambiental                    |
+| TW-23 | alertService.whitebox.test.js   | RF-10, RN-29, RN-30 | N/A - AlertService         | Unidade | White-box / Branch / MC/DC       | Classifica multiplas violacoes como critico                                            | Duas violacoes ambientais                 |
+| TW-24 | alertService.whitebox.test.js   | RF-10, RN-29        | N/A - AlertService         | Unidade | White-box / Branch Coverage      | Deteta temperatura abaixo do minimo                                                    | temperature below min                     |
+| TW-25 | alertService.whitebox.test.js   | RF-10, RN-29        | N/A - AlertService         | Unidade | White-box / Branch Coverage      | Deteta humidade acima do maximo                                                        | humidity above max                        |
+| TW-26 | alertService.whitebox.test.js   | RF-10, RN-29        | N/A - AlertService         | Unidade | White-box / Branch Coverage      | Deteta luminosidade abaixo do minimo                                                   | luminosity below min                      |
+| TW-27 | alertService.whitebox.test.js   | RF-10, RN-29        | N/A - AlertService         | Unidade | White-box / Branch Coverage      | Deteta luminosidade acima do maximo                                                    | luminosity above max                      |
+| TW-28 | batchService.whitebox.test.js   | RF-07, RN-14        | N/A - BatchService         | Unidade | White-box / Branch Coverage      | Atualiza lote para o mesmo estado sem erro                                             | status ativo para ativo                   |
+| TW-29 | batchService.whitebox.test.js   | RF-07, RN-14        | N/A - BatchService         | Unidade | White-box / Branch Coverage      | Rejeita transicao apos lote concluido                                                  | concluido para comprometido               |
+| TW-30 | batchService.whitebox.test.js   | RF-07, RN-14, RN-34 | N/A - BatchService         | Unidade | White-box / MCC / MC/DC          | Rejeita comprometido sem perdas                                                        | ativo sem perdas                          |
+| TW-31 | batchService.whitebox.test.js   | RF-07, RN-14, RN-34 | N/A - BatchService         | Unidade | White-box / MCC / MC/DC          | Permite comprometido com perdas                                                        | ativo com perdas                          |
+| TW-32 | batchService.whitebox.test.js   | RF-07, RN-14, RN-33 | N/A - BatchService         | Unidade | White-box / Branch Coverage      | Rejeita conclusao sem actualEndDate pela API publica                                   | concluido sem data                        |
+| TW-33 | batchService.whitebox.test.js   | RF-07, RN-14, RN-33 | N/A - BatchService         | Unidade | White-box / Branch / MC/DC       | Permite ativo para concluido com data real                                             | ativo para concluido                      |
+| TW-34 | batchService.whitebox.test.js   | RF-07, RN-14, RN-33 | N/A - BatchService         | Unidade | White-box / Branch / MC/DC       | Permite comprometido para concluido com data real                                      | comprometido para concluido               |
+| TW-35 | batchService.whitebox.test.js   | RF-07, RN-14        | N/A - BatchService         | Unidade | White-box / MCC / MC/DC          | Rejeita comprometido para ativo                                                        | comprometido para ativo                   |
+| TW-36 | automationService.whitebox.test.js | RF-11, RN-21, RN-35 | N/A - AutomationService  | Unidade | White-box / MCC / MC/DC          | Decide executar em modo automatico com regra ativa e medicao recente                  | automatico, enabled, recente              |
+| TW-37 | automationService.whitebox.test.js | RF-11, RN-21, RN-35 | N/A - AutomationService  | Unidade | White-box / MCC / MC/DC          | Decide sugerir em modo manual com regra ativa e medicao recente                       | manual, enabled, recente                  |
+| TW-38 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar quando regra esta inativa                                               | disabled                                  |
+| TW-39 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar quando regra esta ausente                                               | rule null                                 |
+| TW-40 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar medicao antiga                                                          | medicao antiga                            |
+| TW-41 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar medicao futura                                                          | medicao futura                            |
+| TW-42 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar medicao ausente                                                         | measurement null                          |
+| TW-43 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / MCC / MC/DC          | Decide ignorar medicao sem measuredAt                                                  | measuredAt ausente                        |
+| TW-44 | automationService.whitebox.test.js | RF-11, RN-35       | N/A - AutomationService    | Unidade | White-box / Branch Coverage      | Decide ignorar measuredAt invalido                                                     | measuredAt invalido                       |
+| TW-45 | automationService.whitebox.test.js | RF-11, RN-21, RN-35 | N/A - AutomationService  | Unidade | White-box / Branch Coverage      | Usa modo default do repositorio quando mode e omitido                                  | mode omitido                              |
 | TI-01 | api.integration.test.js          | RF-02               | GET /health                | Integração | Smoke / Contrato HTTP            | Health check devolve status ok com HTTP 200                                           | API Express carregada                     |
 | TI-02 | api.integration.test.js          | RF-01, RN-04, RN-06 | POST /users                | Integração | Particionamento de Equivalência  | Cria utilizador público sem expor passwordHash                                        | JSON válido                               |
 | TI-03 | api.integration.test.js          | RF-02, RF-03, RN-05, RN-06 | POST /auth/login     | Integração | Particionamento de Equivalência  | Login válido devolve accessToken, refreshToken e user                                 | Utilizador registado                      |
@@ -179,11 +205,11 @@
 | RF-04    | Gestão do catálogo de ervas aromáticas                                      |
 | RF-05    | Gestão de planos de cultivo                                                 |
 | RF-06    | Gestão de utilizadores e perfis                                             |
-| RF-07    | Gestão de lotes de cultivo                                                  |
+| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RF-08    | Gestão de tarefas operacionais                                              |
 | RF-09    | Registo e consulta de medições ambientais                                   |
-| RF-10    | Gestão de alertas                                                           |
-| RF-11    | Gestão de automação e modo manual/automático                                |
+| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
+| RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45, TI-16 |
 | RF-12    | Exportação de relatórios                                                    |
 | RF-13    | Consulta e registo de logs de auditoria                                     |
 | RN-01    | Username deve ser válido                                                    |
@@ -199,27 +225,27 @@
 | RN-11    | Data de início deve ser válida e permite calcular data prevista de colheita |
 | RN-12    | Tipo de plano deve ser válido: regular, emergencia ou pontual               |
 | RN-13    | Lote deve referenciar um plano existente                                    |
-| RN-14    | Estado do lote deve ser válido e respeitar transições: ativo, concluido ou comprometido |
+| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RN-15    | Tarefa deve referenciar um lote existente e ter tipo válido                 |
 | RN-16    | Estado da tarefa deve ser válido                                            |
 | RN-17    | Medição deve referenciar um lote existente e conter valores numéricos       |
 | RN-18    | Alerta deve ter tipo e mensagem válidos                                     |
 | RN-19    | Ignorar alerta exige justificação                                           |
 | RN-20    | Regra de automação deve ter nome, trigger e action                          |
-| RN-21    | Modo de automação deve ser manual ou automatico                             |
+| RN-21             | TU-75, TU-76, TW-36, TW-37, TW-45, TI-16                                                 |
 | RN-23    | Relatório deve referenciar um recurso exportável conhecido                  |
 | RN-24    | Plano pontual exige autorização explícita do Responsavel Técnico             |
 | RN-25    | Intervalo de temperatura do plano deve respeitar [18, 28]                   |
 | RN-26    | Intervalo de humidade do plano deve respeitar [40, 80]                      |
 | RN-27    | Intervalo de luminosidade do plano deve respeitar [5000, 25000]             |
 | RN-28    | Duração do ciclo do plano deve respeitar [1, 365] dias                      |
-| RN-29    | Medições ambientais fora dos limites do plano geram alertas automaticamente |
-| RN-30    | Alertas ambientais devem ser classificados como Informativo, Aviso ou Crítico |
-| RN-31    | Dados de sensor não confiáveis devem gerar alerta Informativo               |
+| RN-29             | TU-103, TU-104, TU-105, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12           |
+| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TW-21, TW-22, TW-23, TI-11, TI-12        |
+| RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114, TW-20                                            |
 | RN-32    | Justificação para ignorar alerta deve ter entre 10 e 500 caracteres         |
-| RN-33    | Conclusão de lote exige data real de conclusão                              |
-| RN-34    | Lote só pode ficar comprometido quando existem perdas registadas            |
-| RN-35    | Motor de automação decide executar, sugerir ou ignorar por modo, regra ativa e medição recente |
+| RN-33             | TU-115, TW-32, TW-33, TW-34                                                              |
+| RN-34             | TU-116, TU-117, TW-30, TW-31                                                             |
+| RN-35             | TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45 |
 | RN-36    | Endpoints e operações protegidas devem respeitar perfis autorizados         |
 | RN-37    | Produtividade do lote deve considerar produção, perdas e tempo real face ao planeado |
 
@@ -235,11 +261,11 @@
 | RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48, TI-06, TI-07        |
 | RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124, TW-01, TW-02, TW-03, TW-04, TW-05, TW-06, TW-07, TW-08, TW-09, TW-10, TW-11, TW-12, TW-13, TW-14, TW-15, TW-16, TW-17, TW-18, TW-19, TI-09, TI-10 |
 | RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
-| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TI-10            |
+| RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62, TI-15                                                  |
 | RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105, TI-11, TI-12                           |
-| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TI-11, TI-12, TI-13, TI-14 |
-| RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TI-16                   |
+| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
+| RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45, TI-16 |
 | RF-12             | TU-77, TU-79, TI-17                                                                       |
 | RF-13             | TU-80, TU-81                                                                              |
 | RN-01             | TU-04, TU-05, TU-06, TU-09, TU-14, TU-15, TU-16, TU-17, TU-18                             |
@@ -255,27 +281,27 @@
 | RN-11             | TU-34, TU-36, TU-37, TU-38, TU-39, TW-01, TW-03, TW-04, TW-05, TW-06, TW-08, TI-09       |
 | RN-12             | TU-40, TU-41, TU-42, TU-43, TW-01, TW-07, TW-09, TI-09                                   |
 | RN-13             | TU-52, TU-54, TI-10                                                                       |
-| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TI-10                                |
+| RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RN-15             | TU-58, TU-61, TU-62, TI-15                                                               |
 | RN-16             | TU-60, TI-15                                                                              |
 | RN-17             | TU-63, TU-65, TU-66, TI-11, TI-12                                                       |
 | RN-18             | TU-67, TU-125, TU-126                                                                     |
 | RN-19             | TU-70, TU-71, TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                        |
 | RN-20             | TU-72, TI-16                                                                              |
-| RN-21             | TU-75, TU-76, TI-16                                                                       |
+| RN-21             | TU-75, TU-76, TW-36, TW-37, TW-45, TI-16                                                 |
 | RN-23             | TU-79, TI-17                                                                              |
 | RN-24             | TU-42, TU-82, TU-124, TW-09, TW-10, TW-11                                                |
 | RN-25             | TU-83, TU-84, TU-85, TU-86, TU-87, TW-01, TW-12, TW-13, TW-14, TW-15, TW-16              |
 | RN-26             | TU-88, TU-89, TU-90, TU-91, TU-92, TW-01                                                 |
 | RN-27             | TU-93, TU-94, TU-95, TU-96, TU-97, TW-01                                                 |
 | RN-28             | TU-98, TU-99, TU-100, TU-101, TU-102, TW-01, TW-08, TW-17, TW-18, TW-19                  |
-| RN-29             | TU-103, TU-104, TU-105, TI-11, TI-12                                                     |
-| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TI-11, TI-12                              |
-| RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114                                                   |
+| RN-29             | TU-103, TU-104, TU-105, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12           |
+| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TW-21, TW-22, TW-23, TI-11, TI-12        |
+| RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114, TW-20                                            |
 | RN-32             | TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                                     |
-| RN-33             | TU-115                                                                                    |
-| RN-34             | TU-116, TU-117                                                                            |
-| RN-35             | TU-118, TU-119, TU-120, TU-121                                                           |
+| RN-33             | TU-115, TW-32, TW-33, TW-34                                                              |
+| RN-34             | TU-116, TU-117, TW-30, TW-31                                                             |
+| RN-35             | TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45 |
 | RN-36             | TU-122, TU-123, TU-127, TU-128, TI-04, TI-05                                             |
 | RN-37             | TU-57                                                                                     |
 
