@@ -183,6 +183,7 @@
 | TI-05 | api.integration.test.js          | RN-36               | GET /plans                 | Integração | Particionamento de Equivalência  | Rejeita endpoint protegido com token inválido com HTTP 401                            | Bearer token inválido                     |
 | TI-06 | api.integration.test.js          | RF-04, RN-07, RN-08 | POST /herbs, GET /herbs/:id | Integração | Particionamento de Equivalência | Importa CSV válido e confirma persistência por id                                     | Utilizador autenticado                    |
 | TI-07 | api.integration.test.js          | RF-04, RN-08        | POST /herbs                | Integração | Classe Inválida                  | Rejeita CSV com linha inválida/parcialmente válida com HTTP 400                       | Utilizador autenticado                    |
+| TI-08 | api.integration.test.js          | RF-02, RN-05, RN-06 | GET /users/me              | Integração | Fluxo entre Componentes          | Access token devolvido pelo login autentica endpoint protegido                         | Utilizador autenticado                    |
 | TI-09 | api.integration.test.js          | RF-05, RN-10, RN-11, RN-12 | POST /plans          | Integração | Fluxo entre Componentes          | Cria plano regular e calcula expectedHarvestDate                                      | Erva importada e token válido             |
 | TI-10 | api.integration.test.js          | RF-05, RF-07, RN-13, RN-14 | POST /batches, GET /batches/:id | Integração | Fluxo entre Componentes | Associa lote ao plano e confirma persistência                                         | Plano existente                           |
 | TI-11 | api.integration.test.js          | RF-09, RF-10, RN-17, RN-29, RN-30 | POST /measurements | Integração | Fluxo entre Componentes          | Medição com uma violação gera alerta aviso                                            | Lote com plano e limites                  |
@@ -192,7 +193,10 @@
 | TI-15 | api.integration.test.js          | RF-08, RN-15, RN-16 | POST /tasks, GET /tasks/:id, PATCH /tasks/:id/status | Integração | Fluxo entre Componentes | Cria, consulta e conclui tarefa operacional                                           | Lote existente                            |
 | TI-16 | api.integration.test.js          | RF-11, RN-20, RN-21 | POST/GET/PATCH /automation/rules, PUT /automation/mode | Integração | Fluxo entre Componentes | Cria, consulta, atualiza regra e altera modo de automação                             | Utilizador autenticado                    |
 | TI-17 | api.integration.test.js          | RF-12, RN-23        | GET /reports              | Integração | Contrato HTTP / Conteúdo         | Exporta relatório CSV com headers e conteúdo esperado                                 | Plano existente                           |
+| TI-18 | api.integration.test.js          | RF-03, RN-06        | POST /auth/refresh, GET /users/me | Integração | Fluxo entre Componentes   | Refresh token devolvido pelo login gera accessToken válido para endpoint protegido      | Refresh token válido                      |
 | TI-19 | api.integration.test.js          | RF-02               | GET /unknown              | Integração | Classe Inválida / Contrato HTTP  | Rota inexistente devolve HTTP 404                                                     | API Express carregada                     |
+| TI-20 | api.integration.test.js          | RF-13, RN-36        | GET /audit                | Integração | Particionamento de Equivalência  | Utilizador Administrador autenticado consulta logs de auditoria com HTTP 200           | Utilizador Administrador autenticado      |
+| TI-21 | api.integration.test.js          | RF-13, RN-36        | GET /audit                | Integração | Classe Inválida / Autorização    | Utilizador autenticado sem perfil Administrador recebe HTTP 403                        | Utilizador Responsavel autenticado        |
 
 
 
@@ -257,8 +261,8 @@
 | Requisito/Regra   | Casos de Teste                                                                            |
 |:------------------|:------------------------------------------------------------------------------------------|
 | RF-01             | TU-12, TU-13, TU-14, TU-15, TU-16, TU-17, TU-18, TU-19, TU-20, TU-21, TU-22, TU-23, TU-24, TI-02 |
-| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127, TI-01, TI-03, TI-19 |
-| RF-03             | TU-10, TU-11, TI-03                                                                       |
+| RF-02             | TU-01, TU-02, TU-03, TU-04, TU-05, TU-06, TU-07, TU-08, TU-09, TU-127, TI-01, TI-03, TI-08, TI-19 |
+| RF-03             | TU-10, TU-11, TI-03, TI-18                                                               |
 | RF-04             | TU-25, TU-26, TU-27, TU-28, TU-29, TU-30, TU-31, TU-32, TU-47, TU-48, TI-06, TI-07        |
 | RF-05             | TU-33, TU-34, TU-35, TU-36, TU-37, TU-38, TU-39, TU-40, TU-41, TU-42, TU-43, TU-49, TU-50, TU-51, TU-82, TU-83, TU-84, TU-85, TU-86, TU-87, TU-88, TU-89, TU-90, TU-91, TU-92, TU-93, TU-94, TU-95, TU-96, TU-97, TU-98, TU-99, TU-100, TU-101, TU-102, TU-124, TW-01, TW-02, TW-03, TW-04, TW-05, TW-06, TW-07, TW-08, TW-09, TW-10, TW-11, TW-12, TW-13, TW-14, TW-15, TW-16, TW-17, TW-18, TW-19, TI-09, TI-10 |
 | RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
@@ -268,13 +272,13 @@
 | RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
 | RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45, TI-16 |
 | RF-12             | TU-77, TU-79, TI-17                                                                       |
-| RF-13             | TU-80, TU-81, TU-130                                                                      |
+| RF-13             | TU-80, TU-81, TU-130, TI-20, TI-21                                                       |
 | RN-01             | TU-04, TU-05, TU-06, TU-09, TU-14, TU-15, TU-16, TU-17, TU-18                             |
 | RN-02             | TU-07, TU-08, TU-09, TU-19, TU-20                                                         |
 | RN-03             | TU-13                                                                                     |
 | RN-04             | TU-12, TU-44, TI-02                                                                       |
-| RN-05             | TU-01, TU-02, TU-03, TU-127, TI-03                                                       |
-| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123, TU-128, TI-02, TI-03 |
+| RN-05             | TU-01, TU-02, TU-03, TU-127, TI-03, TI-08                                               |
+| RN-06             | TU-01, TU-10, TU-12, TU-21, TU-22, TU-23, TU-24, TU-45, TU-122, TU-123, TU-128, TI-02, TI-03, TI-08, TI-18 |
 | RN-07             | TU-25, TU-28, TI-06                                                                       |
 | RN-08             | TU-29, TU-30, TI-06, TI-07                                                               |
 | RN-09             | TU-31                                                                                     |
@@ -303,7 +307,7 @@
 | RN-33             | TU-115, TW-32, TW-33, TW-34                                                              |
 | RN-34             | TU-116, TU-117, TW-30, TW-31                                                             |
 | RN-35             | TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45 |
-| RN-36             | TU-122, TU-123, TU-127, TU-128, TI-04, TI-05                                             |
+| RN-36             | TU-122, TU-123, TU-127, TU-128, TI-04, TI-05, TI-20, TI-21                               |
 | RN-37             | TU-57                                                                                     |
 
 

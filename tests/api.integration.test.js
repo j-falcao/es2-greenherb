@@ -161,6 +161,51 @@ describe('GREENHERB API integration tests', () => {
     });
   });
 
+  test('TI-08 access token returned from login authenticates protected endpoints', async () => {
+    await registerUser();
+
+    const auth = await login();
+
+    const response = await request(app)
+      .get('/users/me')
+      .set('Authorization', `Bearer ${auth.accessToken}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      id: '1',
+      username: 'ana_green',
+      role: 'Responsavel'
+    });
+  });
+
+  test('TI-18 refresh token returned from login creates a valid access token', async () => {
+    await registerUser();
+
+    const auth = await login();
+
+    const refresh = await request(app)
+      .post('/auth/refresh')
+      .send({
+        refreshToken: auth.refreshToken
+      });
+
+    expect(refresh.status).toBe(200);
+    expect(refresh.body).toEqual({
+      accessToken: expect.any(String)
+    });
+
+    const response = await request(app)
+      .get('/users/me')
+      .set('Authorization', `Bearer ${refresh.body.accessToken}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      id: '1',
+      username: 'ana_green',
+      role: 'Responsavel'
+    });
+  });
+
   test('TI-04 protected endpoint rejects missing Authorization header', async () => {
     const response = await request(app).get('/plans');
 
@@ -447,6 +492,37 @@ describe('GREENHERB API integration tests', () => {
     expect(response.headers['content-disposition']).toBe('attachment; filename="plans.csv"');
     expect(response.text).toContain('id,userId,herbId,type,startDate');
     expect(response.text).toContain(`${plan.id},1,1,regular,2026-05-13`);
+  });
+
+  test('TI-20 GET /audit allows Administrador users', async () => {
+    const { authHeader } = await authenticatedAgent('admin_green', 'Administrador');
+
+    const response = await request(app)
+      .get('/audit')
+      .set('Authorization', authHeader);
+
+    expect(response.status).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+    expect(response.body).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        username: 'admin_green',
+        action: 'create',
+        resource: 'users'
+      })
+    ]));
+  });
+
+  test('TI-21 GET /audit rejects authenticated non-admin users', async () => {
+    const { authHeader } = await authenticatedAgent('responsavel_green', 'Responsavel');
+
+    const response = await request(app)
+      .get('/audit')
+      .set('Authorization', authHeader);
+
+    expect(response.status).toBe(403);
+    expect(response.body).toEqual({
+      message: 'Forbidden'
+    });
   });
 
   test('TI-19 unknown route returns 404', async () => {
