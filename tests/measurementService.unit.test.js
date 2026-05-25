@@ -129,6 +129,37 @@ describe('measurementService unit tests', () => {
     });
   });
 
+  test('TU131 creates a measurement from an automatic sensor gateway stub', () => {
+    const batch = createBatch();
+    const sensorGatewayStub = {
+      readEnvironment: () => ({
+        temperature: 29,
+        humidity: 70,
+        luminosity: 15000,
+        sensorOK: true,
+        measuredAt: '2026-05-14T10:00:00.000Z'
+      })
+    };
+
+    const measurement = measurementService.createMeasurementFromGateway({
+      batchId: batch.id,
+      gateway: sensorGatewayStub,
+      user
+    });
+
+    expect(measurement).toMatchObject({
+      temperature: 29,
+      humidity: 70,
+      luminosity: 15000,
+      measuredAt: '2026-05-14T10:00:00.000Z',
+      generatedAlert: {
+        type: 'aviso',
+        resource: 'measurements',
+        resourceId: measurement.id
+      }
+    });
+  });
+
   test('TU104 generates a critico alert when multiple measurements are outside plan limits', () => {
     const batch = createBatch();
 

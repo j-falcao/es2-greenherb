@@ -1,4 +1,5 @@
 const alertRepository = require('../repositories/alertRepository');
+const notificationGateway = require('../gateways/notificationGateway');
 const auditService = require('./auditService');
 const { createError } = require('./errors');
 const { requireOneOf, requireString, requireStringLength } = require('./validators');
@@ -104,13 +105,22 @@ function createMeasurementAlert({ measurement, batch, plan, sensorOK = true, use
     return null;
   }
 
-  return createAlert({
+  const alert = createAlert({
     type: classification.type,
     message: `Measurement ${measurement.id} outside cultivation plan limits: ${classification.violations.join(', ')}`,
     resource: 'measurements',
     resourceId: measurement.id,
     user
   });
+
+  notificationGateway.sendNotification({
+    type: alert.type,
+    message: alert.message,
+    resource: alert.resource,
+    resourceId: alert.resourceId
+  });
+
+  return alert;
 }
 
 function listAlerts() {

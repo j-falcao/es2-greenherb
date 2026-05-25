@@ -131,6 +131,9 @@
 | TU-127 | authMiddleware.unit.test.js     | RF-02, RN-05, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita pedido sem token de autorização                                               | Authorization header ausente              |
 | TU-128 | authMiddleware.unit.test.js     | RF-06, RN-06, RN-36 | N/A — AuthMiddleware       | Unidade | Particionamento de Equivalência  | Rejeita perfil de utilizador desconhecido                                             | Role Visitante                            |
 | TU-129 | batchService.unit.test.js       | RF-07, RN-14        | N/A — BatchService         | Unidade | Cobertura de Condições Múltiplas | Rejeita transição de estado após lote concluído                                       | Lote com estado concluido                 |
+| TU-131 | measurementService.unit.test.js | RF-09, RF-10, RN-17, RN-29, RN-30 | N/A — MeasurementService | Unidade | Duplo de Teste / Stub            | Cria medição a partir de gateway automático e gera alerta aviso                       | Stub de sensor com temperatura acima do limite |
+| TU-132 | alertService.unit.test.js       | RF-10, RN-18, RN-30 | N/A — AlertService         | Unidade | Duplo de Teste / Mock            | Envia notificação quando alerta ambiental de medição é criado                         | Mock de notificationGateway e uma violação ambiental |
+| TU-133 | alertService.unit.test.js       | RF-10, RN-30        | N/A — AlertService         | Unidade | Duplo de Teste / Mock            | Não envia notificação quando a medição não gera alerta                                | Mock de notificationGateway e sem violação ambiental |
 | TW-01 | planService.whitebox.test.js    | RF-05, RN-10, RN-11, RN-12, RN-24, RN-25, RN-26, RN-27, RN-28 | N/A - PlanService | Unidade | White-box / Statement / Branch / MC/DC | Cria plano regular valido com defaults e cobre ramos FALSE/base das decisoes de criacao | Erva existente e data valida              |
 | TW-02 | planService.whitebox.test.js    | RF-05, RN-10        | N/A - PlanService          | Unidade | White-box / Branch Coverage      | Rejeita criacao para erva inexistente                                                  | HerbId inexistente                        |
 | TW-03 | planService.whitebox.test.js    | RF-05, RN-11        | N/A - PlanService          | Unidade | White-box / MCC / MC/DC          | Rejeita startDate nao string                                                           | startDate null                            |
@@ -268,8 +271,8 @@
 | RF-06             | TU-44, TU-45, TU-46, TU-122, TU-123, TU-128                                               |
 | RF-07             | TU-52, TU-53, TU-54, TU-55, TU-56, TU-57, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RF-08             | TU-58, TU-59, TU-60, TU-61, TU-62, TI-15                                                  |
-| RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105, TI-11, TI-12                           |
-| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
+| RF-09             | TU-63, TU-64, TU-65, TU-66, TU-103, TU-104, TU-105, TU-131, TI-11, TI-12                    |
+| RF-10             | TU-67, TU-68, TU-69, TU-70, TU-71, TU-103, TU-104, TU-105, TU-106, TU-107, TU-108, TU-109, TU-110, TU-111, TU-112, TU-113, TU-114, TU-125, TU-126, TU-131, TU-132, TU-133, TW-20, TW-21, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12, TI-13, TI-14 |
 | RF-11             | TU-72, TU-73, TU-74, TU-75, TU-76, TU-118, TU-119, TU-120, TU-121, TW-36, TW-37, TW-38, TW-39, TW-40, TW-41, TW-42, TW-43, TW-44, TW-45, TI-16 |
 | RF-12             | TU-77, TU-79, TI-17                                                                       |
 | RF-13             | TU-80, TU-81, TU-130, TI-20, TI-21                                                       |
@@ -289,8 +292,8 @@
 | RN-14             | TU-52, TU-55, TU-56, TU-115, TU-116, TU-117, TU-129, TW-28, TW-29, TW-30, TW-31, TW-32, TW-33, TW-34, TW-35, TI-10 |
 | RN-15             | TU-58, TU-61, TU-62, TI-15                                                               |
 | RN-16             | TU-60, TI-15                                                                              |
-| RN-17             | TU-63, TU-65, TU-66, TI-11, TI-12                                                       |
-| RN-18             | TU-67, TU-125, TU-126                                                                     |
+| RN-17             | TU-63, TU-65, TU-66, TU-131, TI-11, TI-12                                                |
+| RN-18             | TU-67, TU-125, TU-126, TU-132                                                            |
 | RN-19             | TU-70, TU-71, TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                        |
 | RN-20             | TU-72, TI-16                                                                              |
 | RN-21             | TU-75, TU-76, TW-36, TW-37, TW-45, TI-16                                                 |
@@ -300,8 +303,8 @@
 | RN-26             | TU-88, TU-89, TU-90, TU-91, TU-92, TW-01                                                 |
 | RN-27             | TU-93, TU-94, TU-95, TU-96, TU-97, TW-01                                                 |
 | RN-28             | TU-98, TU-99, TU-100, TU-101, TU-102, TW-01, TW-08, TW-17, TW-18, TW-19                  |
-| RN-29             | TU-103, TU-104, TU-105, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12           |
-| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TW-21, TW-22, TW-23, TI-11, TI-12        |
+| RN-29             | TU-103, TU-104, TU-105, TU-131, TW-22, TW-23, TW-24, TW-25, TW-26, TW-27, TI-11, TI-12   |
+| RN-30             | TU-103, TU-104, TU-111, TU-112, TU-113, TU-114, TU-131, TU-132, TU-133, TW-21, TW-22, TW-23, TI-11, TI-12 |
 | RN-31             | TU-105, TU-111, TU-112, TU-113, TU-114, TW-20                                            |
 | RN-32             | TU-106, TU-107, TU-108, TU-109, TU-110, TI-13, TI-14                                     |
 | RN-33             | TU-115, TW-32, TW-33, TW-34                                                              |

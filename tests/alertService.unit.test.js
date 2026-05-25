@@ -1,6 +1,11 @@
 const alertRepository = require('../src/repositories/alertRepository');
 const auditRepository = require('../src/repositories/auditRepository');
+const notificationGateway = require('../src/gateways/notificationGateway');
 const alertService = require('../src/services/alertService');
+
+jest.mock('../src/gateways/notificationGateway', () => ({
+  sendNotification: jest.fn()
+}));
 
 describe('alertService unit tests', () => {
   const user = { id: '7', username: 'ana_green' };
@@ -8,6 +13,7 @@ describe('alertService unit tests', () => {
   beforeEach(() => {
     alertRepository.reset();
     auditRepository.reset();
+    notificationGateway.sendNotification.mockClear();
   });
 
   test('TU67 creates an alert', () => {
@@ -156,5 +162,61 @@ describe('alertService unit tests', () => {
     });
 
     expect(result.type).toBe(expectedType);
+  });
+
+  test('TU132 sends a notification when a measurement alert is created', () => {
+    const alert = alertService.createMeasurementAlert({
+      measurement: {
+        id: '10',
+        temperature: 29,
+        humidity: 70,
+        luminosity: 15000
+      },
+      batch: { id: '1' },
+      plan: {
+        environmentLimits: {
+          temperature: { min: 18, max: 28 },
+          humidity: { min: 40, max: 80 },
+          luminosity: { min: 5000, max: 25000 }
+        }
+      },
+      user
+    });
+
+    expect(alert).toMatchObject({
+      type: 'aviso',
+      resource: 'measurements',
+      resourceId: '10'
+    });
+    expect(notificationGateway.sendNotification).toHaveBeenCalledTimes(1);
+    expect(notificationGateway.sendNotification).toHaveBeenCalledWith({
+      type: 'aviso',
+      message: alert.message,
+      resource: 'measurements',
+      resourceId: '10'
+    });
+  });
+
+  test('TU133 does not send a notification when no measurement alert is created', () => {
+    const alert = alertService.createMeasurementAlert({
+      measurement: {
+        id: '11',
+        temperature: 23,
+        humidity: 70,
+        luminosity: 15000
+      },
+      batch: { id: '1' },
+      plan: {
+        environmentLimits: {
+          temperature: { min: 18, max: 28 },
+          humidity: { min: 40, max: 80 },
+          luminosity: { min: 5000, max: 25000 }
+        }
+      },
+      user
+    });
+
+    expect(alert).toBeNull();
+    expect(notificationGateway.sendNotification).not.toHaveBeenCalled();
   });
 });

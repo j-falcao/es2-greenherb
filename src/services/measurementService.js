@@ -1,6 +1,7 @@
 const measurementRepository = require('../repositories/measurementRepository');
 const batchRepository = require('../repositories/batchRepository');
 const planRepository = require('../repositories/planRepository');
+const sensorGateway = require('../gateways/sensorGateway');
 const auditService = require('./auditService');
 const alertService = require('./alertService');
 const { createError } = require('./errors');
@@ -66,6 +67,20 @@ function createMeasurement({ batchId, temperature, humidity, luminosity, measure
   };
 }
 
+function createMeasurementFromGateway({ batchId, measuredAt, gateway = sensorGateway, user }) {
+  const reading = gateway.readEnvironment();
+
+  return createMeasurement({
+    batchId,
+    temperature: reading.temperature,
+    humidity: reading.humidity,
+    luminosity: reading.luminosity,
+    sensorOK: reading.sensorOK,
+    measuredAt: reading.measuredAt || measuredAt,
+    user
+  });
+}
+
 function listMeasurements() {
   return measurementRepository.findAll();
 }
@@ -76,6 +91,7 @@ function getMeasurementById(id) {
 
 module.exports = {
   createMeasurement,
+  createMeasurementFromGateway,
   listMeasurements,
   getMeasurementById
 };
